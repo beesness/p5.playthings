@@ -1,0 +1,142 @@
+/* TYPE */
+
+body
+{
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 300;
+  letter-spacing: -0.03rem;
+}
+
+h1, h2, h3, h4, h5
+{
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+a 
+{
+  font-weight: 500;
+  text-decoration: underline; 
+}
+
+a.btn 
+{
+  text-decoration: none; 
+}
+
+small
+{
+  font-weight: 300;
+  font-size: 83%;
+}
+
+.card-body
+{
+  padding: 1.53rem 1.23rem;  
+}
+
+.learning-goals ul 
+{
+  padding-left: 1.23rem;
+  margin-top: 0.23rem;
+  font-weight: 500;
+}
+
+
+/* COLOUR */
+
+:root 
+{
+  --beesness-blue: rgb(23, 23, 53);
+  --beesness-blue-alpha: rgba(23, 23, 53, 0.23);
+  --beesness-yellow: rgb(253, 223, 0);
+  --beesness-red: rgb(223, 0, 53);
+}
+
+body
+{
+  background-color: var(--beesness-yellow);
+  color: var(--beesness-blue);
+}
+
+.card
+{
+  background-color: var(--beesness-yellow);
+  border: 1px solid var(--beesness-blue-alpha);
+}
+
+.box-shadow {
+  box-shadow: 0 0.23rem 0.53rem var(--beesness-blue-alpha);
+}
+
+.text-muted 
+{
+  opacity: 0.23;
+  color: inherit !important;
+}
+
+.text-muted:hover 
+{
+  opacity: 0.83;
+  color: inherit !important;
+}
+
+.accent
+{
+  color: var(--beesness-red) !important;
+}
+
+a 
+{
+  color: inherit!important;
+}
+
+.btn-outline-secondary 
+{
+  color: var(--beesness-blue);
+  border-color: var(--beesness-blue);
+}
+
+.btn-outline-secondary:hover 
+{
+  color: var(--beesness-yellow) !important;
+  background-color: var(--beesness-blue);
+  border-color: var(--beesness-blue);
+}
+
+footer 
+{
+  border-top: 1px solid;
+/*
+  color: var(--beesness-yellow);
+  background-color: var(--beesness-blue);
+*/
+}
+
+.jumbotron
+{
+  border-radius: 0; 
+  border-bottom: 1px solid;
+/*  border-bottom-color: var(--beesness-red);*/
+/*  border-bottom: 1px solid var(--beesness-blue-alpha);*/
+  position: relative;
+}
+.jumbotron:after
+{
+  display: block;
+  content: " ";
+/*  background: white;*/
+  background: var(--beesness-red);
+  background: var(--beesness-blue);
+  height: 1px;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+}
+
+
+
+
+
+
