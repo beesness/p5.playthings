@@ -13,15 +13,15 @@ h1, h2, h3, h4, h5
   margin-bottom: 1.5rem;
 }
 
-a 
+a
 {
   font-weight: 500;
-  text-decoration: underline; 
+  text-decoration: underline;
 }
 
-a.btn 
+a.btn
 {
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 small
@@ -32,10 +32,10 @@ small
 
 .card-body
 {
-  padding: 1.53rem 1.23rem;  
+  padding: 1.53rem 1.23rem;
 }
 
-.learning-goals ul 
+.learning-goals ul
 {
   padding-left: 1.23rem;
   margin-top: 0.23rem;
@@ -45,7 +45,7 @@ small
 
 /* COLOUR */
 
-:root 
+:root
 {
   --beesness-blue: rgb(23, 23, 53);
   --beesness-blue-alpha: rgba(23, 23, 53, 0.23);
@@ -69,13 +69,13 @@ body
   box-shadow: 0 0.23rem 0.53rem var(--beesness-blue-alpha);
 }
 
-.text-muted 
+.text-muted
 {
   opacity: 0.23;
   color: inherit !important;
 }
 
-.text-muted:hover 
+.text-muted:hover
 {
   opacity: 0.83;
   color: inherit !important;
@@ -86,25 +86,25 @@ body
   color: var(--beesness-red) !important;
 }
 
-a 
+a
 {
   color: inherit!important;
 }
 
-.btn-outline-secondary 
+.btn-outline-secondary
 {
   color: var(--beesness-blue);
   border-color: var(--beesness-blue);
 }
 
-.btn-outline-secondary:hover 
+.btn-outline-secondary:hover
 {
   color: var(--beesness-yellow) !important;
   background-color: var(--beesness-blue);
   border-color: var(--beesness-blue);
 }
 
-footer 
+footer
 {
   border-top: 1px solid;
 /*
@@ -115,7 +115,7 @@ footer
 
 .jumbotron
 {
-  border-radius: 0; 
+  border-radius: 0;
   border-bottom: 1px solid;
 /*  border-bottom-color: var(--beesness-red);*/
 /*  border-bottom: 1px solid var(--beesness-blue-alpha);*/
@@ -134,9 +134,3 @@ footer
   left: 0;
   right: 0;
 }
-
-
-
-
-
-
