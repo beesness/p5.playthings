@@ -1,0 +1,19 @@
+html, body 
+{
+    height: 100%;
+}
+
+body
+{
+    background: #1c142d; 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dg.a 
+{
+   float: none !important;
+}
