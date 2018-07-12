@@ -28,6 +28,16 @@ Compiled by [Matteo](https://twitter.com/@baddeo) + [contributors](graphs/contri
     - remix your plaything (source-code)
 7. Take a screenshot / animated gif of your plaything and link it to `<img src="">`. A 3x2 image ratio (eg: 600x400 px) would be nice.
 
+### How to preview your plaything on your computer
+
+You just open `index.html` in your browser, right? Unfortunately, p5 won't be able to load images and sounds with this method (as the browser doesn't have access to all your files by default).
+
+So you need to start a _web server_ on the folder where your plaything lives (or one of its parent folders):
+
+1. Open Terminal
+2. Navigate to this project folder
+3. Type `python -m SimpleHTTPServer 1983`
+4. Open your favourite browser and go to `http://localhost:1983`
 
 <!--
 ## TODO
