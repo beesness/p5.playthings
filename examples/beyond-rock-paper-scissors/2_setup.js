@@ -52,7 +52,7 @@ function createButton(type)
 function getButtonX()
 {
   let buttonsAlreadyThere = Object.keys(buttons).length
-  let xFactor = 0.25
+  let xFactor = 1 / (game.elementsCount + 1)
   let x = width * (xFactor + xFactor * buttonsAlreadyThere)
   return x
 }

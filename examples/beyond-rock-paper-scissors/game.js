@@ -72,6 +72,11 @@ class Game
     return name in this._elements
   }
 
+  get elementsCount()
+  {
+    return this.elementNames.length
+  }
+
   get elementNames()
   {
     return Object.keys(this._elements)
