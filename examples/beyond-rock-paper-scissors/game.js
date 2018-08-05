@@ -1,58 +1,54 @@
-class GameElement
-{
-  constructor(name)
-  {
-    this._name = name
-    this._beats = {}
-    this._image = null
-  }
-
-  get name()
-  {
-    return this._name
-  }
-
-  set image(url)
-  {
-    this._image = url
-  }
-
-  get image()
-  {
-    return this._image
-  }
-
-  set beats(stringOrArray)
-  {
-    if (stringOrArray.constructor === Array)
-    {
-      let array = stringOrArray
-      for (var e=0; e<array.length; e++)
-      {
-        let element = array[e]
-        this._beats[element] = true
-      }
-    }
-    else
-    {
-      let element = stringOrArray
-      this._beats[element] = true
-    }
-  }
-
-  get beats()
-  {
-    return this._beats
-  }
-}
-
+// inspired by https://stackoverflow.com/a/17977389
 class Game
 {
   constructor()
   {
+    this._players = []
     this._elements = {}
   }
 
+  // functions to do with players (either human or robot)
+  addPlayer(data)
+  {
+    let player = new Player(data, this.elementNames)
+    this._players.push(player)
+  }
+
+  get players()
+  {
+    return this._players
+  }
+
+  // return the target/enemy of a player, based on its index
+  getTarget(index)
+  {
+    let player = this.players[index]
+    // target will be either the next player in the players array, or the very first player in the array
+    let target = (this.players[index + 1]) ? this.players[index + 1] : this.players[0]
+    return target
+  }
+
+  // return the p5 position vector for the target
+  getTargetPosition(index)
+  {
+    let target = this.getTarget(index)
+    let position = (target._sprite) ? target._sprite.position : target.getButton(target.currentMove).position
+    return position
+  }
+
+  // return all buttons for all players
+  get buttons()
+  {
+    let buttons = {}
+    for (var p=0; p<this.players.length; p++)
+    {
+      let player = this.players[p]
+      buttons[player.name] = player.buttons
+    }
+    return buttons
+  }
+
+  // functions to do with elements (an element would be paper, for instance)
   addElement(name, beats, image)
   {
     let element = new GameElement(name)
@@ -82,28 +78,73 @@ class Game
     return Object.keys(this._elements)
   }
 
-  doThisForEachElement(_function)
+  get elementsAsArray()
   {
-    let self = this
-    Object.keys(this._elements).forEach(function(elementName)
+    let elementsArray = []
+    for (var e=0; e<this.elementsCount; e++)
     {
-      _function(self.getElement(elementName))
-    })
-  }
-
-  getWinnerMove(move1, move2)
-  {
-    let winner = null
-    if (move1 !== move2)
-    if (this._elements[move1].beats[move2]) winner = move1
-    if (this._elements[move2].beats[move1]) winner = move2
-    return winner
+      let element = this.getElement(this.elementNames[e])
+      elementsArray.push(element)
+    }
+    return elementsArray
   }
 
   get randomElementName()
   {
     let elementNames = this.elementNames,
-        randomIndex = Math.floor(Math.random() * elementNames.length)
+    randomIndex = Math.floor(Math.random() * elementNames.length)
     return elementNames[randomIndex]
   }
+
+  // functions to do with moves
+  getWinnerMove(moveA, moveB)
+  {
+    let winnerMove = null
+    if (moveA !== moveB)
+    if (this._elements[moveA].beats[moveB]) winnerMove = moveA
+    if (this._elements[moveB].beats[moveA]) winnerMove = moveB
+    return winnerMove
+  }
+
+  getWinner(playerA, playerB)
+  {
+    let winnerMove = this.getWinnerMove(playerA.currentMove, playerB.currentMove)
+    if (!winnerMove) return null
+    return (winnerMove == playerA.currentMove) ? playerA : playerB
+  }
+
+  getWinners()
+  {
+    let players = this.players,
+        winners = {}
+    for (var p=0; p<players.length; p++)
+    {
+      let player = players[p]
+      let target = game.getTarget(p)
+      let winner = this.getWinner(player, target)
+      if (winner) winners[winner.name] = true
+    }
+    return winners
+  }
+
+  // functions to do with scores and win conditions
+
+  updateScores()
+  {
+    let winners = this.getWinners()
+    for (var p=0; p<this.players.length; p++)
+    {
+      let player = this.players[p]
+      if (winners[player.name]) player.incrementScore()
+    }
+  }
+
+  resetScores()
+  {
+    this._players.forEach(function(player)
+    {
+      player.score = 0
+    })
+  }
+
 }

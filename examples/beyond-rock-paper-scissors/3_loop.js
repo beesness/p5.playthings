@@ -4,13 +4,23 @@
 function touchEnded()
 {
   // console.log('touchEnded')
-  // console.log('buttons.rock.mouseIsOver ' + buttons.rock.mouseIsOver)
-
-  game.doThisForEachElement(function(element)
+  // let's see if any buttons have been pressed
+  let players = game.players
+  for (var p=0; p<players.length; p++)
   {
-    let name = element.name
-    if (buttons[name].mouseIsOver) playMove(name)
-  })
+    let player = players[p]
+    let buttons = player.buttonsAsArray
+    for (var b=0; b<buttons.length; b++)
+    {
+      let button = buttons[b]
+      // console.log(player.name + ' ' + button.type + ' pressed? ' + button.mouseIsOver)
+      if (button.mouseIsOver)
+      {
+        player.currentMove = button.type
+        playMoves()
+      }
+    }
+  }
 
   // prevent this function from firing twice
   // see https://p5js.org/reference/#/p5/touchEnded
@@ -29,9 +39,18 @@ function draw()
   showScores()
 
   // check for collisions between bullets (if there are any bullets)
-  if (human.bullet && robot.bullet)
+  let players = game.players
+  for (var p=0; p<players.length; p++)
   {
-    human.bullet.bounce(robot.bullet, bulletsHit)
+    let player = players[p]
+    if (player.hasActiveBullet)
+    {
+      let target = game.getTarget(p)
+      if (target.hasActiveBullet)
+      {
+        player.bullet.bounce(target.bullet, bulletsHit)
+      }
+    }
   }
 
   // redraw everything
@@ -44,84 +63,47 @@ function showScores()
   textSize(53)
   fill('white')
 
-  let x = robot.position.x
-  let y = height * 0.1
-  text(robot.score, x, y)
-
-  y = height * 0.9
-  text(human.score, x, y)
+  let players = game.players
+  for (var p=0; p<players.length; p++)
+  {
+    let player = players[p]
+    player.showScore()
+  }
 }
 
-function playMove(move)
+// trigger all players to reveal their moves (and compute a winner)
+function playMoves()
 {
-  // console.log('play ' + move)
-  human.move = move
-  robot.move = game.randomElementName
-
-  // OPTION 1: no bullets
-  // let winner = getWinner()
-  // updateScore(winner)
-
-  // OPTION 2: fire bullets
-  // update scores when bullets collide
+  let players = game.players
+  for (var p=0; p<players.length; p++)
+  {
+    let player = players[p]
+    if (player.type == 'robot') player.currentMove = game.randomElementName
+  }
+  // fire bullets
+  // will update scores when bullets collide
   fireBullets()
-}
-
-function getWinner()
-{
-  let winnerMove = game.getWinnerMove(human.move, robot.move),
-      winner = null
-
-  if (winnerMove == human.move) winner = human
-  if (winnerMove == robot.move) winner = robot
-
-  return winner
-}
-
-function updateScore(winner)
-{
-  if (winner == robot) incrementScore(robot)
-  if (winner == human) incrementScore(human)
-  // if it's a tie, do nothing...
-}
-
-function incrementScore(player)
-{
-  player.score = player.score + 1 // increment score value by 1
 }
 
 function fireBullets()
 {
-  let chosenButton = buttons[human.move]
+  let players = game.players
+  let winners = game.getWinners()
+  for (var p=0; p<players.length; p++)
+  {
+    let player = players[p]
+    let targetPosition = game.getTargetPosition(p)
+    player.fireBullet(targetPosition)
 
-  robot.bullet = createSprite(robot.position.x, robot.position.y)
-  robot.bullet.addImage(images[robot.move])
-  robot.bullet.scale = getScale() / 2
-  robot.bullet.setCollider('circle',0,0, robot.bullet.width/2)
-  // robot.bullet.debug = true
-  robot.bullet.attractionPoint(5, chosenButton.position.x, chosenButton.position.y)
-  robot.bullet.life = 200
-
-  human.bullet = createSprite(chosenButton.position.x, chosenButton.position.y)
-  human.bullet.addImage(images[human.move])
-  human.bullet.scale = getScale() / 2
-  human.bullet.setCollider('circle',0,0, human.bullet.width/2)
-  // human.bullet.debug = true
-  human.bullet.attractionPoint(5, robot.position.x, robot.position.y)
-  human.bullet.life = 200
-
-  // in case there is a winner (not a draw)
-  // change the winner sprite mass for a nice bouncing effect
-  let winner = getWinner()
-  if (winner) winner.bullet.mass = 2
+    // in case the player is a winner (not a draw)
+    // change the winner bullet mass for a nice bouncing effect
+    if (winners[player.name]) player.bullet.mass = 2
+  }
 }
 
-function bulletsHit()
+function bulletsHit(spriteA, spriteB)
 {
-  // console.log('bulletsHit')
-
-  // in case there is a winner (not a draw)
-  // update the score
-  let winner = getWinner()
-  if (winner) updateScore(winner)
+  console.log('bulletsHit ', spriteA.name, spriteB.name)
+  // update the scores
+  game.updateScores()
 }
