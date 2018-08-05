@@ -47,7 +47,7 @@ function createButton(type)
   buttons[type] = button // add this button to the buttons "bucket"
 }
 
-// work out where the next button shoudl be positioned, horizontally
+// work out where the next button will be positioned, horizontally
 function getButtonX()
 {
   let buttonsAlreadyThere = Object.keys(buttons).length

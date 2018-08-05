@@ -149,7 +149,7 @@ function fireBullets()
   human.bullet.life = 200
 
   // in case there is a winner (not a draw)
-  // change the winner sprite mass for a nice bouncing effect
+  // change the winner bullet mass for a nice bouncing effect
   let winner = getWinner()
   if (winner) winner.bullet.mass = 2
 }
