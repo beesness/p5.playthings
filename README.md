@@ -2,7 +2,7 @@
 
 A collection of _hackable templates_ to learn [p5.play](http://p5play.molleindustria.org/).
 
-Compiled by [Matteo](https://twitter.com/@baddeo) + [contributors](graphs/contributors).
+Compiled by [Matteo](https://twitter.com/@baddeo) + [contributors](https://github.com/beesness/p5.playthings/graphs/contributors).
 
 ## How to contribute
 
